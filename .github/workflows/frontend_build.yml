@@ -1,0 +1,89 @@
+name: frontend_build
+
+on:
+  push:
+    branches:
+      - 'release/**'
+      - 'develop'
+      - 'feature/**'
+    paths:
+      # if frontend file not changed, do not trigger build job.
+      - 'frontend/**'
+      - '.github/workflows/frontend*.yml'
+
+env:
+  GCP_REGION: ${{secrets.GCP_REGION}}
+  GCR_HOSTNAME: ${{secrets.GCR_HOSTNAME}}
+  GCP_PROJECT_ID: ${{secrets.GCP_PROJECT_ID}}
+  CLOUD_RUN_FRONTEND_SERVICE_NAME: ${{secrets.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
+  IMAGE_NAME: ${{secrets.GCR_HOSTNAME}}/${{secrets.GCP_PROJECT_ID}}/otaku-timetable/${{secrets.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
+
+jobs:
+  build:
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout the repository
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      -
+        id: "auth"
+        name: 'Authenticate to Google Cloud'
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+          service_account: ${{secrets.GCP_SERVICE_ACCOUNT}}
+      # -
+      #   id: 'secrets'
+      #   uses: 'google-github-actions/get-secretmanager-secrets@v0'
+      #   with:
+      #     secrets: |-
+      #       dotenv:zumi-sandbox/otaku-timetable-frontend-env
+      # -
+      #   # TODO: Secretの内容が露出してしまうから、別の方法を考える
+      #   name: Create .env.local
+      #   run: echo '${{ steps.secrets.outputs.dotenv }}' > frontend/.env.local
+      -
+        name: Configure docker to use the gcloud cli
+        run: gcloud auth configure-docker --quiet
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: frontend
+          file: frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:alpine-${{github.sha}}
+            ${{ env.IMAGE_NAME }}:alpine
+            ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      -
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      -
+        name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{env.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
+          image: ${{ env.IMAGE_NAME }}:latest
+          region: ${{ env.GCP_REGION }}
