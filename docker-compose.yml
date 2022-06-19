@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  frontend:
+    image: otaku_timetable_frontend:alpine
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    env_file:
+      - frontend/.env.local
+    ports:
+      - 3000:3000
+    # サーバがリッスンしているのでttyは不要
+    # tty: true
