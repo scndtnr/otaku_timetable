@@ -48,16 +48,16 @@ jobs:
         with:
           workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
           service_account: ${{secrets.GCP_SERVICE_ACCOUNT}}
-      # -
-      #   id: 'secrets'
-      #   uses: 'google-github-actions/get-secretmanager-secrets@v0'
-      #   with:
-      #     secrets: |-
-      #       dotenv:zumi-sandbox/otaku-timetable-frontend-env
-      # -
-      #   # TODO: Secretの内容が露出してしまうから、別の方法を考える
-      #   name: Create .env.local
-      #   run: echo '${{ steps.secrets.outputs.dotenv }}' > frontend/.env.local
+      -
+        id: 'secrets'
+        uses: 'google-github-actions/get-secretmanager-secrets@v0'
+        with:
+          secrets: |-
+            dotenv:zumi-sandbox/otaku-timetable-frontend-env
+      -
+        # TODO: Secretの内容が露出してしまうから、別の方法を考える
+        name: Create .env.local
+        run: echo '${{ steps.secrets.outputs.dotenv }}' > frontend/.env.local
       -
         name: Configure docker to use the gcloud cli
         run: gcloud auth configure-docker --quiet
@@ -79,11 +79,11 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      -
-        name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: ${{env.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
-          image: ${{ env.IMAGE_NAME }}:latest
-          region: ${{ env.GCP_REGION }}
+      # -
+      #   name: Deploy to Cloud Run
+      #   id: deploy
+      #   uses: google-github-actions/deploy-cloudrun@v0
+      #   with:
+      #     service: ${{env.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
+      #     image: ${{ env.IMAGE_NAME }}:latest
+      #     region: ${{ env.GCP_REGION }}
