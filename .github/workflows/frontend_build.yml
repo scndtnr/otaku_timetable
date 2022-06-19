@@ -72,18 +72,18 @@ jobs:
             ${{ env.IMAGE_NAME }}:alpine-${{github.sha}}
             ${{ env.IMAGE_NAME }}:alpine
             ${{ env.IMAGE_NAME }}:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       -
         name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      # -
-      #   name: Deploy to Cloud Run
-      #   id: deploy
-      #   uses: google-github-actions/deploy-cloudrun@v0
-      #   with:
-      #     service: ${{env.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
-      #     image: ${{ env.IMAGE_NAME }}:latest
-      #     region: ${{ env.GCP_REGION }}
+      -
+        name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{env.CLOUD_RUN_FRONTEND_SERVICE_NAME}}
+          image: ${{ env.IMAGE_NAME }}:latest
+          region: ${{ env.GCP_REGION }}
