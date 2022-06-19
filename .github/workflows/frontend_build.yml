@@ -72,7 +72,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:alpine-${{github.sha}}
             ${{ env.IMAGE_NAME }}:alpine
             ${{ env.IMAGE_NAME }}:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       -
         name: Move cache
