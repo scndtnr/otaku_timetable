@@ -1,8 +1,9 @@
 import InputHours from "@/components/ui/input_hours";
-import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
 import { Box, Button, FormControl, FormLabel, Stack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
 
 export const Form = () => {
   // 回答の状態管理
@@ -38,15 +39,60 @@ export const Form = () => {
     setAnswerState(e);
   };
 
+  // 円グラフの設定
+
+  ChartJS.register(ArcElement, Tooltip, Legend);
+
+  const doughnutData = (answerData: TimeTableAnswer, sumAnswer: number) => {
+    const restData = { 未入力: 24 - sumAnswer + " h" };
+    const extendData = Object.assign({}, answerData, restData);
+    const labels = Object.keys(extendData);
+    const data = Object.values(extendData)
+      .map((field) => field.replace(/\sh$/, ""))
+      .map((hours) => parseFloat(hours));
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "# of Votes",
+          data: data,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(192, 192, 192, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(192, 192, 192, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+      options: {
+        legend: {
+          position: "right",
+        },
+      },
+    };
+  };
+
   // 合計値の状態管理
   const [sumAnswerState, setSumAnswerState] = useState<number>(0);
 
-  useDidUpdateEffect(() => {
-    const sumValues = (obj: TimeTableAnswer) =>
-      Object.values(obj)
-        .map((field) => field.replace(/\sh$/, ""))
-        .map((hours) => parseFloat(hours))
-        .reduce((a, b) => a + b);
+  const sumValues = (obj: TimeTableAnswer) =>
+    Object.values(obj)
+      .map((field) => field.replace(/\sh$/, ""))
+      .map((hours) => parseFloat(hours))
+      .reduce((a, b) => a + b);
+
+  useEffect(() => {
     setSumAnswerState(sumValues(answerState));
     console.log(`sum: ${sumAnswerState}`);
   }, [answerState]);
@@ -57,7 +103,22 @@ export const Form = () => {
         <Box position="sticky" top="0" zIndex="sticky" backgroundColor="gray.200">
           <Box>Form Page</Box>
           <Box>Sum: {sumAnswerState}</Box>
+          <Box>
+            <Doughnut
+              data={doughnutData(answerState, sumAnswerState)}
+              options={{
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: "right",
+                  },
+                },
+              }}
+            />
+          </Box>
         </Box>
+
         <Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
@@ -84,7 +145,7 @@ export const Form = () => {
               {/* Submit */}
               <Box position="sticky" bottom="2" zIndex="sticky" backgroundColor="gray.200">
                 <Button
-                  mt={2}
+                  margin={2}
                   colorScheme="orange"
                   isLoading={formState.isSubmitting}
                   type="submit"
