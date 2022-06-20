@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Form from "../Form";
 import { Top } from "./Top";
 
 export const TopPage = () => {
@@ -10,6 +11,7 @@ export const TopPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Top />
+      <Form />
     </>
   );
 };
