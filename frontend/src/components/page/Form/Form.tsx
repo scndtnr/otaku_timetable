@@ -13,6 +13,7 @@ export const Form = () => {
     q3: string;
     q4: string;
     q5: string;
+    q6: string;
   };
 
   const [answerState, setAnswerState] = useState<TimeTableAnswer>({
@@ -21,11 +22,24 @@ export const Form = () => {
     q3: "0",
     q4: "0",
     q5: "0",
+    q6: "0",
   });
 
-  const { control, handleSubmit, formState } = useForm<TimeTableAnswer>({
+  const labels = {
+    q1: "オタ活",
+    q2: "趣味（オタ活以外）",
+    q3: "交友・交際",
+    q4: "仕事",
+    q5: "睡眠",
+    q6: "その他",
+  };
+
+  const { control, handleSubmit, formState, getValues } = useForm<TimeTableAnswer>({
     defaultValues: answerState,
   });
+
+  const maxHoursValidation = () =>
+    sumValues(getValues()) <= 24 || "全項目の合計値が 24 h 以内に収まるよう入力してください。";
 
   const onSubmit: SubmitHandler<TimeTableAnswer> = (e) => {
     const parseFloatObject = (obj: TimeTableAnswer) => {
@@ -43,13 +57,16 @@ export const Form = () => {
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
-  const doughnutData = (answerData: TimeTableAnswer, sumAnswer: number) => {
-    const restData = { 未入力: 24 - sumAnswer + " h" };
-    const extendData = Object.assign({}, answerData, restData);
-    const labels = Object.keys(extendData);
-    const data = Object.values(extendData)
+  const doughnutData = (
+    labelData: TimeTableAnswer,
+    answerData: TimeTableAnswer,
+    sumAnswer: number
+  ) => {
+    const labels = Object.values(labelData).concat(["未入力"]);
+    const data = Object.values(answerData)
       .map((field) => field.replace(/\sh$/, ""))
-      .map((hours) => parseFloat(hours));
+      .map((hours) => parseFloat(hours))
+      .concat([24 - sumAnswer]);
     return {
       labels: labels,
       datasets: [
@@ -62,6 +79,7 @@ export const Form = () => {
             "rgba(255, 206, 86, 0.2)",
             "rgba(75, 192, 192, 0.2)",
             "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
             "rgba(192, 192, 192, 0.2)",
           ],
           borderColor: [
@@ -70,6 +88,7 @@ export const Form = () => {
             "rgba(255, 206, 86, 1)",
             "rgba(75, 192, 192, 1)",
             "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
             "rgba(192, 192, 192, 1)",
           ],
           borderWidth: 1,
@@ -105,7 +124,7 @@ export const Form = () => {
           <Box>Sum: {sumAnswerState}</Box>
           <Box>
             <Doughnut
-              data={doughnutData(answerState, sumAnswerState)}
+              data={doughnutData(labels, answerState, sumAnswerState)}
               options={{
                 responsive: false,
                 maintainAspectRatio: false,
@@ -123,24 +142,28 @@ export const Form = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
               <FormControl>
-                <FormLabel htmlFor="q1">q1</FormLabel>
-                <InputHours name="q1" control={control} />
+                <FormLabel htmlFor="q1">{labels.q1}</FormLabel>
+                <InputHours name="q1" control={control} rules={{ validate: maxHoursValidation }} />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="q2">q2</FormLabel>
-                <InputHours name="q2" control={control} />
+                <FormLabel htmlFor="q2">{labels.q2}</FormLabel>
+                <InputHours name="q2" control={control} rules={{ validate: maxHoursValidation }} />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="q3">q3</FormLabel>
-                <InputHours name="q3" control={control} />
+                <FormLabel htmlFor="q3">{labels.q3}</FormLabel>
+                <InputHours name="q3" control={control} rules={{ validate: maxHoursValidation }} />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="q4">q4</FormLabel>
-                <InputHours name="q4" control={control} />
+                <FormLabel htmlFor="q4">{labels.q4}</FormLabel>
+                <InputHours name="q4" control={control} rules={{ validate: maxHoursValidation }} />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="q5">q5</FormLabel>
-                <InputHours name="q5" control={control} />
+                <FormLabel htmlFor="q5">{labels.q5}</FormLabel>
+                <InputHours name="q5" control={control} rules={{ validate: maxHoursValidation }} />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="q6">{labels.q6}</FormLabel>
+                <InputHours name="q6" control={control} rules={{ validate: maxHoursValidation }} />
               </FormControl>
               {/* Submit */}
               <Box position="sticky" bottom="2" zIndex="sticky" backgroundColor="gray.200">
