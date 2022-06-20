@@ -10,7 +10,7 @@ export const TopPage = () => {
         <meta name="description" content="オタクの1日についてのアンケート＆類型化アプリ" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Top />
+      {/* <Top /> */}
       <Form />
     </>
   );
