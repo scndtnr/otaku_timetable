@@ -1,10 +1,11 @@
 import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, Button, Container, HStack, Stack, VStack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectActivity, SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, DatasetController } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import doughnutData from "./parts/doughnutData";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 export type DailyTimeFormType = {
   time: string;
@@ -73,67 +74,83 @@ export const DailyTimeForm = () => {
 
   // 円グラフの設定
 
-  ChartJS.register(ArcElement, Tooltip, Legend);
+  ChartJS.register(ArcElement, ChartDataLabels);
 
   return (
     <>
-      <Box>DailyTimeForm</Box>
-      <Doughnut
-        data={doughnutData(calcSpan())}
-        options={{
-          responsive: false,
-          maintainAspectRatio: false,
+      <Stack>
+        <Box>DailyTimeForm</Box>
+        <Container
+          className="chart-container"
+          backgroundColor="gray.300"
+          position="relative"
+          h="300"
+          padding="10"
+        >
+          <Doughnut
+            data={doughnutData(calcSpan())}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
 
-          plugins: {
-            legend: {
-              // display: false,
-              position: "right",
-            },
-            tooltip: {
-              intersect: false,
-            },
-          },
-        }}
-      />
-      {fields.map((item, index) => (
-        <HStack key={item.id}>
-          <SelectTime
-            key={`${item.id}-time`}
-            name={`schedule.${index}.time`}
-            control={control}
-            placeholder="00:00"
-            onBlur={onBlurSortFormElements}
+              plugins: {
+                datalabels: {
+                  display: true,
+                  align: "end",
+                  offset: 30,
+                  formatter: (value, ctx) => {
+                    return ctx.chart.data.labels
+                      ? ctx.chart.data.labels[ctx.dataIndex]
+                      : value + " h";
+                  },
+                },
+              },
+            }}
           />
-          <SelectActivity
-            key={`${item.id}-activity`}
-            name={`schedule.${index}.activity`}
-            control={control}
-            placeholder="Select Options"
-          />
+        </Container>
+
+        <Box padding={2}>
+          {fields.map((item, index) => (
+            <HStack key={item.id}>
+              <SelectTime
+                key={`${item.id}-time`}
+                name={`schedule.${index}.time`}
+                control={control}
+                placeholder="00:00"
+                onBlur={onBlurSortFormElements}
+              />
+              <SelectActivity
+                key={`${item.id}-activity`}
+                name={`schedule.${index}.activity`}
+                control={control}
+                placeholder="Select Options"
+              />
+              <Button
+                key={`${item.id}-remove`}
+                onClick={() => remove(index)}
+                backgroundColor="blue.100"
+              >
+                -
+              </Button>
+            </HStack>
+          ))}
           <Button
-            key={`${item.id}-remove`}
-            onClick={() => remove(index)}
-            backgroundColor="blue.100"
+            onClick={() => append({ time: "0.0", activity: "仕事" })}
+            backgroundColor="orange.100"
           >
-            -
+            +
           </Button>
-        </HStack>
-      ))}
-      <Button
-        onClick={() => append({ time: "0.0", activity: "仕事" })}
-        backgroundColor="orange.100"
-      >
-        +
-      </Button>
-      <Button
-        onClick={() => {
-          console.log(getValues());
-          console.log(calcSpan());
-        }}
-        backgroundColor="green.100"
-      >
-        Log
-      </Button>
+          <Button
+            onClick={() => {
+              console.log(getValues());
+              console.log(calcSpan());
+            }}
+            backgroundColor="green.100"
+          >
+            Log
+          </Button>
+        </Box>
+      </Stack>
     </>
   );
 };
