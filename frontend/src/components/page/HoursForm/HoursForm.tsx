@@ -1,11 +1,11 @@
 import InputHours from "@/components/ui/input_hours";
-import { Box, Button, FormControl, FormLabel, Stack } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input, Stack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-export const Form = () => {
+export const HoursForm = () => {
   // 回答の状態管理
   type TimeTableAnswer = {
     q1: string;
@@ -141,6 +141,7 @@ export const Form = () => {
         <Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
+              <Input type="time" />
               <FormControl>
                 <FormLabel htmlFor="q1">{labels.q1}</FormLabel>
                 <InputHours name="q1" control={control} rules={{ validate: maxHoursValidation }} />

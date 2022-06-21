@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Form from "../Form";
+import HoursForm from "../HoursForm";
 import { Top } from "./Top";
 
 export const TopPage = () => {
@@ -11,7 +11,7 @@ export const TopPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Top /> */}
-      <Form />
+      <HoursForm />
     </>
   );
 };

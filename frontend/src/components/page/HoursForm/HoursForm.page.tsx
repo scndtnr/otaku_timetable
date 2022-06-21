@@ -1,7 +1,7 @@
 import Head from "next/head";
-import { Form } from "./Form";
+import { HoursForm } from "./HoursForm";
 
-export const FormPage = () => {
+export const HoursFormPage = () => {
   return (
     <>
       <Head>
@@ -9,7 +9,7 @@ export const FormPage = () => {
         <meta name="description" content="オタクの時間割の入力フォーム" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Form />
+      <HoursForm />
     </>
   );
 };
