@@ -36,10 +36,13 @@ export const DailyTimeForm = () => {
       }
     );
     const max = inputData.length - 1;
-    return inputData.map(({ index, time, activity }) => {
+    const firstPiece = { index: 0, span: inputData[0].time, activity: inputData[max].activity };
+    const spanData = inputData.map(({ index, time, activity }) => {
       const span: number = index === max ? 24 - time : inputData[index + 1].time - time;
-      return { index, span, activity };
+      return { index: index + 1, span, activity };
     });
+    spanData.unshift(firstPiece);
+    return spanData;
   };
 
   // 項目自体に変更があった際の副作用
