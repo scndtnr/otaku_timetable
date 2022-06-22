@@ -1,10 +1,10 @@
 import { Box, Select, SelectProps } from "@chakra-ui/react";
-import { useController, UseControllerProps } from "react-hook-form";
+import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 import { activityGroups, timeGroups } from "./selectGroups";
 
-type SelectFormType = SelectProps & UseControllerProps;
+type SelectFormType<T extends FieldValues> = SelectProps & UseControllerProps<T>;
 
-export const SelectTime = (props: SelectFormType) => {
+export const SelectTime = <T extends FieldValues>(props: SelectFormType<T>) => {
   const { field } = useController(props);
 
   return (
@@ -18,7 +18,7 @@ export const SelectTime = (props: SelectFormType) => {
   );
 };
 
-export const SelectActivity = (props: SelectFormType) => {
+export const SelectActivity = <T extends FieldValues>(props: SelectFormType<T>) => {
   const { field } = useController(props);
 
   return (

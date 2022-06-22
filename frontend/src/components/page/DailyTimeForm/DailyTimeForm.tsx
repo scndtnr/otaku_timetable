@@ -19,7 +19,19 @@ export type ActivitySpanType = {
 };
 
 export const DailyTimeForm = () => {
-  const { control, getValues, watch } = useForm();
+  const defaultValues = {
+    schedule: [
+      {
+        time: "0.0",
+        activity: "睡眠",
+      },
+      {
+        time: "6.0",
+        activity: "起床",
+      },
+    ],
+  };
+  const { control, getValues, watch } = useForm({ defaultValues });
   const { fields, append, remove, swap } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "schedule", // unique name for your Field Array
@@ -27,9 +39,6 @@ export const DailyTimeForm = () => {
 
   // 項目間の時間を算出する
   const calcSpan = (): ActivitySpanType[] => {
-    if (!getValues("schedule")) {
-      return [{ index: 0, span: 0, activity: "仕事" }];
-    }
     const inputData = Object.entries<DailyTimeFormType>(getValues("schedule")).map(
       ([index, item]) => {
         return { index: parseInt(index), time: parseFloat(item.time), activity: item.activity };
