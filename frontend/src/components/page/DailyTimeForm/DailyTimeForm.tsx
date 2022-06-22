@@ -1,7 +1,6 @@
-import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
-import { Box, Button, Container, HStack, Stack } from "@chakra-ui/react";
+import { Box, Button, Container, HStack, Input, Stack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { SelectActivity, SelectTime } from "./parts/selectForms";
+import { SelectTime } from "./parts/selectForms";
 import { Chart as ChartJS, ArcElement, Color } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import doughnutData from "./parts/doughnutData";
@@ -31,7 +30,7 @@ export const DailyTimeForm = () => {
       },
     ],
   };
-  const { control, getValues, watch } = useForm({ defaultValues });
+  const { control, register, getValues, watch } = useForm({ defaultValues });
   const { fields, append, remove, swap } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "schedule", // unique name for your Field Array
@@ -51,12 +50,6 @@ export const DailyTimeForm = () => {
     spanData.unshift(firstPiece);
     return spanData;
   };
-
-  // // 項目自体に変更があった際の副作用
-  // useDidUpdateEffect(() => {
-  //   console.log(watch("schedule"));
-  //   console.log(JSON.stringify(calcSpan()));
-  // }, [watch("schedule")]);
 
   // time項目からフォーカスが外れた時にソートする
   const onBlurSortFormElements = () => {
@@ -127,11 +120,11 @@ export const DailyTimeForm = () => {
                 placeholder="00:00"
                 onBlur={onBlurSortFormElements}
               />
-              <SelectActivity
-                key={`${item.id}-activity`}
-                name={`schedule.${index}.activity`}
-                control={control}
-                placeholder="Select Options"
+              <Input
+                key={`${item.id}-activity-text`}
+                placeholder="Input Activity"
+                maxW="300"
+                {...register(`schedule.${index}.activity`)}
               />
               <Button
                 key={`${item.id}-remove`}
