@@ -1,24 +1,16 @@
 import { Box, Button, Container, HStack, Input, Stack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement, Color } from "chart.js";
+import { Chart as ChartJS, ArcElement, Color, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import doughnutData from "./parts/doughnutData";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-
-export type DailyTimeFormType = {
-  time: string;
-  activity: string;
-};
-
-export type ActivitySpanType = {
-  index: number;
-  span: number;
-  activity: string;
-};
+import { DailyTimeFormPartsType, DailyTimeFormType } from "./lib/types";
+import { calcSpan } from "./lib/calcActivitySpan";
+import { sumActivitySpan } from "./lib/sumActivitySpan";
 
 export const DailyTimeForm = () => {
-  const defaultValues = {
+  const defaultValues: DailyTimeFormType = {
     schedule: [
       {
         time: "0.0",
@@ -36,27 +28,12 @@ export const DailyTimeForm = () => {
     name: "schedule", // unique name for your Field Array
   });
 
-  // 項目間の時間を算出する
-  const calcSpan = (): ActivitySpanType[] => {
-    const inputData = Object.entries<DailyTimeFormType>(watch("schedule")).map(([index, item]) => {
-      return { index: parseInt(index), time: parseFloat(item.time), activity: item.activity };
-    });
-    const max = inputData.length - 1;
-    const firstPiece = { index: 0, span: inputData[0].time, activity: inputData[max].activity };
-    const spanData = inputData.map(({ index, time, activity }) => {
-      const span: number = index === max ? 24 - time : inputData[index + 1].time - time;
-      return { index: index + 1, span, activity };
-    });
-    spanData.unshift(firstPiece);
-    return spanData;
-  };
-
   // time項目からフォーカスが外れた時にソートする
   const onBlurSortFormElements = () => {
     // console.log("--- OnBlur Start ---");
 
     // 参照用の配列を作成する
-    const timeList = Object.values<DailyTimeFormType>(watch("schedule")).map((item) =>
+    const timeList = Object.values<DailyTimeFormPartsType>(watch("schedule")).map((item) =>
       parseFloat(item.time)
     );
 
@@ -76,7 +53,7 @@ export const DailyTimeForm = () => {
   };
 
   // 円グラフの設定
-  ChartJS.register(ArcElement, ChartDataLabels);
+  ChartJS.register(ArcElement, ChartDataLabels, Legend);
 
   return (
     <>
@@ -84,7 +61,7 @@ export const DailyTimeForm = () => {
         <Box>DailyTimeForm</Box>
         <Container className="chart-container" position="relative" h="300">
           <Doughnut
-            data={doughnutData(calcSpan())}
+            data={doughnutData(calcSpan(watch))}
             options={{
               responsive: true,
               maintainAspectRatio: false,
@@ -92,6 +69,12 @@ export const DailyTimeForm = () => {
                 padding: 30,
               },
               plugins: {
+                legend: {
+                  display: true,
+                  // labels: {
+                  //   generateLabels: []
+                  // }
+                },
                 datalabels: {
                   font: {
                     family: "monospace",
@@ -144,7 +127,7 @@ export const DailyTimeForm = () => {
           <Button
             onClick={() => {
               console.log(JSON.stringify(getValues()));
-              console.log(JSON.stringify(calcSpan()));
+              console.log(JSON.stringify(calcSpan(watch)));
             }}
             backgroundColor="green.100"
           >

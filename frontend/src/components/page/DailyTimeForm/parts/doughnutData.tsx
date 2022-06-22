@@ -1,5 +1,5 @@
 import { ChartData } from "chart.js";
-import { ActivitySpanType } from "../DailyTimeForm";
+import { ActivitySpanType } from "../lib/types";
 
 const backgroundColor = [
   "rgba(255, 99, 132, 0.2)",
