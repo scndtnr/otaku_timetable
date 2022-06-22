@@ -54,15 +54,15 @@ export const DailyTimeForm = () => {
     return spanData;
   };
 
-  // 項目自体に変更があった際の副作用
-  useDidUpdateEffect(() => {
-    console.log(watch("schedule"));
-    console.log(JSON.stringify(calcSpan()));
-  }, [watch("schedule")]);
+  // // 項目自体に変更があった際の副作用
+  // useDidUpdateEffect(() => {
+  //   console.log(watch("schedule"));
+  //   console.log(JSON.stringify(calcSpan()));
+  // }, [watch("schedule")]);
 
   // time項目からフォーカスが外れた時にソートする
   const onBlurSortFormElements = () => {
-    console.log("--- OnBlur Start ---");
+    // console.log("--- OnBlur Start ---");
 
     // 参照用の配列を作成する
     const timeList = Object.values<DailyTimeFormType>(getValues("schedule")).map((item) =>
@@ -73,7 +73,7 @@ export const DailyTimeForm = () => {
     for (let i = 0; i < timeList.length; i++) {
       for (let j = timeList.length - 1; i < j; j--) {
         if (timeList[j] < timeList[j - 1]) {
-          console.log(`OnBlur swap: ${j}, ${j - 1}`);
+          // console.log(`OnBlur swap: ${j}, ${j - 1}`);
           // フォームのスワップ
           swap(j, j - 1);
           // 参照用配列のスワップ
@@ -81,7 +81,7 @@ export const DailyTimeForm = () => {
         }
       }
     }
-    console.log("--- OnBlur End ---");
+    // console.log("--- OnBlur End ---");
   };
 
   // 円グラフの設定
@@ -148,8 +148,8 @@ export const DailyTimeForm = () => {
           </Button>
           <Button
             onClick={() => {
-              console.log(getValues());
-              console.log(calcSpan());
+              console.log(JSON.stringify(getValues()));
+              console.log(JSON.stringify(calcSpan()));
             }}
             backgroundColor="green.100"
           >
