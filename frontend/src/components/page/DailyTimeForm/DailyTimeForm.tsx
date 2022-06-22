@@ -2,7 +2,7 @@ import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
 import { Box, Button, Container, HStack, Stack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectActivity, SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement } from "chart.js";
+import { Chart as ChartJS, ArcElement, Color } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import doughnutData from "./parts/doughnutData";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -109,6 +109,7 @@ export const DailyTimeForm = () => {
                     const labels = ctx.dataset.datalabels?.labels;
                     return labels ? labels[ctx.dataIndex] : "undefined";
                   },
+                  color: (ctx) => ctx.dataset.datalabels?.color as Color,
                 },
               },
             }}

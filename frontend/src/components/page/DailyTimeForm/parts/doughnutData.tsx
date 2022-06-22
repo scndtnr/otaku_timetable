@@ -81,6 +81,7 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
         datalabels: {
           align: "end",
           labels: activityLabels,
+          color: "black",
         },
       },
       {
@@ -92,6 +93,7 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
         datalabels: {
           align: "center",
           labels: clockLabels,
+          color: "gray",
         },
       },
     ],
