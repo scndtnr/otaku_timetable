@@ -1,9 +1,9 @@
 import { Box, Button, Container, HStack, Input, Stack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement, Color, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Color, Legend, LegendItem } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import doughnutData from "./parts/doughnutData";
+import doughnutData, { generateLegendLabels } from "./parts/doughnutData";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { DailyTimeFormPartsType, DailyTimeFormType } from "./lib/types";
 import { calcSpan } from "./lib/calcActivitySpan";
@@ -59,21 +59,25 @@ export const DailyTimeForm = () => {
     <>
       <Stack>
         <Box>DailyTimeForm</Box>
-        <Container className="chart-container" position="relative" h="300">
+        <Container className="chart-container" position="relative" h="300" w="full">
           <Doughnut
             data={doughnutData(calcSpan(watch))}
             options={{
               responsive: true,
               maintainAspectRatio: false,
               layout: {
-                padding: 30,
+                padding: 50,
               },
               plugins: {
                 legend: {
                   display: true,
-                  // labels: {
-                  //   generateLabels: []
-                  // }
+                  position: "right",
+                  labels: {
+                    generateLabels: (chart) => {
+                      const legentItems = generateLegendLabels(calcSpan(watch)) as LegendItem[];
+                      return legentItems;
+                    },
+                  },
                 },
                 datalabels: {
                   font: {

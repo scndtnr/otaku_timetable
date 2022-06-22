@@ -1,4 +1,5 @@
-import { ChartData } from "chart.js";
+import { ChartData, Color } from "chart.js";
+import { sumActivitySpan } from "../lib/sumActivitySpan";
 import { ActivitySpanType } from "../lib/types";
 
 const backgroundColor = [
@@ -31,10 +32,25 @@ const activityColorDict = (spanData: ActivitySpanType[]) => {
     ...activiryEntries.map(([index, act]) => {
       const i: number = parseInt(index) % 6;
       return {
-        [act]: { backgroundColor: backgroundColor[i], borderColor: borderColor[i] },
+        [act]: {
+          backgroundColor: backgroundColor[i] as Color,
+          borderColor: borderColor[i] as Color,
+        },
       };
     })
   );
+};
+
+export const generateLegendLabels = (spanData: ActivitySpanType[]) => {
+  const activitySum = sumActivitySpan(spanData);
+  activitySum.sort((a, b) => b.total - a.total);
+  const colorDict = activityColorDict(spanData);
+  return activitySum.map((item) => {
+    return {
+      text: `${item.activity}: ${item.total} h`,
+      fillStyle: colorDict[item.activity].backgroundColor,
+    };
+  });
 };
 
 export const clockLabels = [
