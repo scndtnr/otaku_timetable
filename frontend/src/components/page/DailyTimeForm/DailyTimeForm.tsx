@@ -58,20 +58,19 @@ export const DailyTimeForm = () => {
   return (
     <>
       <Stack>
-        <Box>DailyTimeForm</Box>
-        <Container className="chart-container" position="relative" h="300" w="full">
+        <Container className="chart-container" position="relative" h="400" w="full">
           <Doughnut
             data={doughnutData(calcSpan(watch))}
             options={{
               responsive: true,
               maintainAspectRatio: false,
               layout: {
-                padding: 50,
+                padding: 30,
               },
               plugins: {
                 legend: {
                   display: true,
-                  position: "right",
+                  position: "bottom",
                   labels: {
                     generateLabels: (chart) => {
                       const legentItems = generateLegendLabels(calcSpan(watch)) as LegendItem[];
