@@ -128,6 +128,7 @@ export const DailyTimeForm = () => {
             onClick={() => {
               console.log(JSON.stringify(getValues()));
               console.log(JSON.stringify(calcSpan(watch)));
+              console.log(JSON.stringify(sumActivitySpan(calcSpan(watch))));
             }}
             backgroundColor="green.100"
           >
