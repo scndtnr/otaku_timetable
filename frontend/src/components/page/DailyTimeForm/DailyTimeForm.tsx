@@ -136,7 +136,7 @@ export const DailyTimeForm = () => {
             </HStack>
           ))}
           <Button
-            onClick={() => append({ time: "0.0", activity: "仕事" })}
+            onClick={() => append({ time: "0.0", activity: "" })}
             backgroundColor="orange.100"
           >
             +
