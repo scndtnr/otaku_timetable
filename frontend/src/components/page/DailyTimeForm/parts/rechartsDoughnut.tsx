@@ -20,29 +20,29 @@ const RechartsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
   // 活動毎のスパン合計
   const activitySum = sumActivitySpan(spanData);
 
-  const dataLabel = ({ name, cx, x, y }) => {
-    const textAnchor = x > cx ? "start" : "end";
-    return (
-      <>
-        {/* 引数で付属情報を受け取れます */}
-        <Text x={x} y={y} textAnchor={textAnchor} fill="#82ca9d">
-          {name}
-        </Text>
-      </>
-    );
-  };
+  // const dataLabel = ({ name, cx, x, y }) => {
+  //   const textAnchor = x > cx ? "start" : "end";
+  //   return (
+  //     <>
+  //       {/* 引数で付属情報を受け取れます */}
+  //       <Text x={x} y={y} textAnchor={textAnchor} fill="#82ca9d">
+  //         {name}
+  //       </Text>
+  //     </>
+  //   );
+  // };
 
-  const clockLabel = ({ name, cx, x, y }) => {
-    const textAnchor = "middle";
-    return (
-      <>
-        {/* 引数で付属情報を受け取れます */}
-        <Text x={x} y={y} textAnchor={textAnchor} fill="#82ca9d">
-          {name}
-        </Text>
-      </>
-    );
-  };
+  // const clockLabel = ({ name, cx, x, y }) => {
+  //   const textAnchor = "middle";
+  //   return (
+  //     <>
+  //       {/* 引数で付属情報を受け取れます */}
+  //       <Text x={x} y={y} textAnchor={textAnchor} fill="#82ca9d">
+  //         {name}
+  //       </Text>
+  //     </>
+  //   );
+  // };
 
   return (
     <>
@@ -58,7 +58,7 @@ const RechartsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
           outerRadius={100}
           innerRadius={80}
           fill="#8884d8"
-          label={dataLabel}
+          // label={dataLabel}
         />
         <Pie
           data={clockData}
@@ -71,7 +71,7 @@ const RechartsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
           outerRadius={80}
           innerRadius={60}
           fill="#8884d8"
-          label={clockLabel}
+          // label={clockLabel}
         />
       </PieChart>
     </>
