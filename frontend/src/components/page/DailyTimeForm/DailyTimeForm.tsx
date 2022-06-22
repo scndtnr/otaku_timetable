@@ -91,12 +91,7 @@ export const DailyTimeForm = () => {
     <>
       <Stack>
         <Box>DailyTimeForm</Box>
-        <Container
-          className="chart-container"
-          backgroundColor="gray.300"
-          position="relative"
-          h="300"
-        >
+        <Container className="chart-container" position="relative" h="300">
           <Doughnut
             data={doughnutData(calcSpan())}
             options={{
