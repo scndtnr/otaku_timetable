@@ -39,11 +39,9 @@ export const DailyTimeForm = () => {
 
   // 項目間の時間を算出する
   const calcSpan = (): ActivitySpanType[] => {
-    const inputData = Object.entries<DailyTimeFormType>(getValues("schedule")).map(
-      ([index, item]) => {
-        return { index: parseInt(index), time: parseFloat(item.time), activity: item.activity };
-      }
-    );
+    const inputData = Object.entries<DailyTimeFormType>(watch("schedule")).map(([index, item]) => {
+      return { index: parseInt(index), time: parseFloat(item.time), activity: item.activity };
+    });
     const max = inputData.length - 1;
     const firstPiece = { index: 0, span: inputData[0].time, activity: inputData[max].activity };
     const spanData = inputData.map(({ index, time, activity }) => {
@@ -65,7 +63,7 @@ export const DailyTimeForm = () => {
     // console.log("--- OnBlur Start ---");
 
     // 参照用の配列を作成する
-    const timeList = Object.values<DailyTimeFormType>(getValues("schedule")).map((item) =>
+    const timeList = Object.values<DailyTimeFormType>(watch("schedule")).map((item) =>
       parseFloat(item.time)
     );
 
