@@ -141,7 +141,6 @@ export const HoursForm = () => {
         <Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
-              <Input type="time" />
               <FormControl>
                 <FormLabel htmlFor="q1">{labels.q1}</FormLabel>
                 <InputHours name="q1" control={control} rules={{ validate: maxHoursValidation }} />
