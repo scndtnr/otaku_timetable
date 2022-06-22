@@ -1,3 +1,4 @@
+import { ChartData } from "chart.js";
 import { ActivitySpanType } from "../DailyTimeForm";
 
 const backgroundColor = [
@@ -66,11 +67,10 @@ export const clockLabels = [
 export const clockData = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const doughnutData = (spanData: ActivitySpanType[]) => {
-  const activityLabel = spanData.map((d) => d.activity);
+  const activityLabels = spanData.map((d) => d.activity);
   const activityData = spanData.map((d) => d.span);
   const colorDict = activityColorDict(spanData);
   return {
-    labels: activityLabel,
     datasets: [
       {
         label: "Daily Activity",
@@ -78,6 +78,10 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
         backgroundColor: spanData.map((d) => colorDict[d.activity].backgroundColor),
         borderColor: spanData.map((d) => colorDict[d.activity].borderColor),
         borderWidth: 1,
+        datalabels: {
+          align: "end",
+          labels: activityLabels,
+        },
       },
       {
         label: "Clock Hours",
@@ -85,9 +89,13 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
         backgroundColor: "rgba(0, 0, 0, 0)",
         borderColor: "rgba(192, 192, 192, 0.7)",
         borderWidth: 1,
+        datalabels: {
+          align: "center",
+          labels: clockLabels,
+        },
       },
     ],
-  };
+  } as unknown as ChartData<"doughnut", number[], unknown>;
 };
 
 export default doughnutData;
