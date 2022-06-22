@@ -100,6 +100,9 @@ export const DailyTimeForm = () => {
               },
               plugins: {
                 datalabels: {
+                  font: {
+                    family: "monospace",
+                  },
                   display: (ctx) => ctx.dataset.data[ctx.dataIndex] !== 0,
                   align: (ctx) => ctx.dataset.datalabels?.align as "center" | "end",
                   offset: 20,
