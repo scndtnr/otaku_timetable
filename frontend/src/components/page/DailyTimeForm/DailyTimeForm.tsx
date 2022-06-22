@@ -73,7 +73,6 @@ export const DailyTimeForm = () => {
   };
 
   // 円グラフの設定
-
   ChartJS.register(ArcElement, ChartDataLabels);
 
   return (
@@ -85,14 +84,15 @@ export const DailyTimeForm = () => {
           backgroundColor="gray.300"
           position="relative"
           h="300"
-          padding="10"
         >
           <Doughnut
             data={doughnutData(calcSpan())}
             options={{
               responsive: true,
               maintainAspectRatio: false,
-
+              layout: {
+                padding: 30,
+              },
               plugins: {
                 datalabels: {
                   display: true,
