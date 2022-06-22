@@ -1,17 +1,15 @@
 import Head from "next/head";
-import HoursForm from "../HoursForm";
 import { Top } from "./Top";
 
 export const TopPage = () => {
   return (
     <>
       <Head>
-        <title>オタクの時間割</title>
-        <meta name="description" content="オタクの1日についてのアンケート＆類型化アプリ" />
+        <title>1日のスケジュール可視化</title>
+        <meta name="description" content="1日の過ごし方を共有して趣味の時間を捻出したい" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Top /> */}
-      <HoursForm />
+      <Top />
     </>
   );
 };
