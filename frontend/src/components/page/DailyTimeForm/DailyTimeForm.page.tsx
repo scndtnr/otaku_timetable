@@ -5,7 +5,7 @@ export const DailyTimeFormPage = () => {
   return (
     <>
       <Head>
-        <title>時刻ベース - 入力フォーム</title>
+        <title>円グラフ - 時刻ベース</title>
         <meta name="description" content="時刻ベースでのスケジュール入力フォーム" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
