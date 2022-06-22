@@ -2,9 +2,9 @@ import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
 import { Box, Button, Container, HStack, Stack, VStack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectActivity, SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, DatasetController } from "chart.js";
+import { Chart as ChartJS, ArcElement } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import doughnutData from "./parts/doughnutData";
+import doughnutData, { clockLabels } from "./parts/doughnutData";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 export type DailyTimeFormType = {
@@ -107,13 +107,21 @@ export const DailyTimeForm = () => {
               },
               plugins: {
                 datalabels: {
-                  display: true,
-                  align: "end",
-                  offset: 30,
+                  display: (ctx) => ctx.dataset.data[ctx.dataIndex] !== 0,
+                  align: (ctx) => {
+                    const isOuter = ctx.datasetIndex === 0;
+                    return isOuter ? "end" : "center";
+                  },
+                  offset: 20,
                   formatter: (value, ctx) => {
-                    return ctx.chart.data.labels
-                      ? ctx.chart.data.labels[ctx.dataIndex]
-                      : value + " h";
+                    const isOuter = ctx.datasetIndex === 0;
+                    if (isOuter) {
+                      return ctx.chart.data.labels
+                        ? ctx.chart.data.labels[ctx.dataIndex]
+                        : value + " h";
+                    } else {
+                      return clockLabels[ctx.dataIndex];
+                    }
                   },
                 },
               },

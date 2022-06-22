@@ -36,26 +36,57 @@ const activityColorDict = (spanData: ActivitySpanType[]) => {
   );
 };
 
+export const clockLabels = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+];
+
+export const clockData = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
 const doughnutData = (spanData: ActivitySpanType[]) => {
-  const labels = spanData.map((d) => d.activity);
-  const data = spanData.map((d) => d.span);
+  const activityLabel = spanData.map((d) => d.activity);
+  const activityData = spanData.map((d) => d.span);
   const colorDict = activityColorDict(spanData);
   return {
-    labels: labels,
+    labels: activityLabel,
     datasets: [
       {
-        label: "# of Votes",
-        data: data,
+        label: "Daily Activity",
+        data: activityData,
         backgroundColor: spanData.map((d) => colorDict[d.activity].backgroundColor),
         borderColor: spanData.map((d) => colorDict[d.activity].borderColor),
         borderWidth: 1,
       },
-    ],
-    options: {
-      legend: {
-        position: "right",
+      {
+        label: "Clock Hours",
+        data: clockData,
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        borderColor: "rgba(192, 192, 192, 0.7)",
+        borderWidth: 1,
       },
-    },
+    ],
   };
 };
 
