@@ -1,13 +1,10 @@
-import { Box, Button, Container, HStack, Input, Stack } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, VStack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SelectTime } from "./parts/selectForms";
-import { Chart as ChartJS, ArcElement, Color, Legend, LegendItem } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-import doughnutData, { generateLegendLabels } from "./parts/doughnutData";
-import ChartDataLabels from "chartjs-plugin-datalabels";
 import { DailyTimeFormPartsType, DailyTimeFormType } from "./lib/types";
 import { calcSpan } from "./lib/calcActivitySpan";
 import { sumActivitySpan } from "./lib/sumActivitySpan";
+import { ChartjsDoughnut } from "./parts/chartjsDoughnut";
 
 export const DailyTimeForm = () => {
   const defaultValues: DailyTimeFormType = {
@@ -52,49 +49,10 @@ export const DailyTimeForm = () => {
     // console.log("--- OnBlur End ---");
   };
 
-  // 円グラフの設定
-  ChartJS.register(ArcElement, ChartDataLabels, Legend);
-
   return (
     <>
-      <Stack>
-        <Container className="chart-container" position="relative" h="400" w="full">
-          <Doughnut
-            data={doughnutData(calcSpan(watch))}
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              layout: {
-                padding: 30,
-              },
-              plugins: {
-                legend: {
-                  display: true,
-                  position: "bottom",
-                  labels: {
-                    generateLabels: (chart) => {
-                      const legentItems = generateLegendLabels(calcSpan(watch)) as LegendItem[];
-                      return legentItems;
-                    },
-                  },
-                },
-                datalabels: {
-                  font: {
-                    family: "monospace",
-                  },
-                  display: (ctx) => ctx.dataset.data[ctx.dataIndex] !== 0,
-                  align: (ctx) => ctx.dataset.datalabels?.align as "center" | "end",
-                  offset: 20,
-                  formatter: (value, ctx) => {
-                    const labels = ctx.dataset.datalabels?.labels;
-                    return labels ? labels[ctx.dataIndex] : "undefined";
-                  },
-                  color: (ctx) => ctx.dataset.datalabels?.color as Color,
-                },
-              },
-            }}
-          />
-        </Container>
+      <VStack>
+        <ChartjsDoughnut watch={watch} />
 
         <Box padding={2}>
           {fields.map((item, index) => (
@@ -138,7 +96,7 @@ export const DailyTimeForm = () => {
             Log
           </Button>
         </Box>
-      </Stack>
+      </VStack>
     </>
   );
 };
