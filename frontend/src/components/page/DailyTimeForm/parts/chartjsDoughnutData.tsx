@@ -1,8 +1,8 @@
 import { ChartData } from "chart.js";
-import { activityColorDict } from "../lib/activityColorDict";
-import { clockData, clockLabels } from "../lib/clockData";
-import { sumActivitySpan } from "../lib/sumActivitySpan";
-import { ActivitySpanType } from "../lib/types";
+import { activityColorDict } from "../../../model/activityColorDict";
+import { clockValue, clockLabels } from "../../../model/clockData";
+import { sumActivitySpan } from "../../../model/sumActivitySpan";
+import { ActivitySpanType } from "../../../model/types";
 
 export const generateLegendLabels = (spanData: ActivitySpanType[]) => {
   const activitySum = sumActivitySpan(spanData);
@@ -36,7 +36,7 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
       },
       {
         label: "Clock Hours",
-        data: clockData,
+        data: clockValue,
         backgroundColor: "rgba(0, 0, 0, 0)",
         borderColor: "rgba(192, 192, 192, 0.7)",
         borderWidth: 1,

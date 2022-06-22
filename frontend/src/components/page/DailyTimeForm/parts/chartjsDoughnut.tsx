@@ -4,8 +4,8 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Color, Legend, LegendItem } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-import { calcSpan } from "../lib/calcActivitySpan";
-import { DailyTimeFormType } from "../lib/types";
+import { calcSpan } from "../../../model/calcActivitySpan";
+import { DailyTimeFormType } from "../../../model/types";
 import doughnutData, { generateLegendLabels } from "./chartjsDoughnutData";
 
 export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {

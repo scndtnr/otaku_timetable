@@ -11,4 +11,5 @@ export type ActivitySpanType = {
   index: number;
   span: number;
   activity: string;
+  rawTime: string;
 };
