@@ -32,6 +32,8 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
           align: "end",
           labels: activityLabels,
           color: "black",
+          labelBorderColor: spanData.map((d) => colorDict[d.activity].borderColor),
+          labelBackgroundColor: "white",
         },
       },
       {
@@ -44,6 +46,8 @@ const doughnutData = (spanData: ActivitySpanType[]) => {
           align: "center",
           labels: clockLabels,
           color: "gray",
+          labelBorderColor: "rgba(0, 0, 0, 0)",
+          labelBackgroundColor: "rgba(0, 0, 0, 0)",
         },
       },
     ],
