@@ -1,5 +1,5 @@
 import { uniq } from "@/lib/uniq";
-import { ActivitySpanType } from "./types";
+import { SpanType } from "./types";
 
 const backgroundColor = [
   "rgba(255, 99, 132, 0.2)",
@@ -21,10 +21,7 @@ const borderColor = [
   "rgba(192, 192, 192, 1)",
 ];
 
-export const colorDictByDataKey = (
-  spanData: ActivitySpanType[],
-  getKey: (data: ActivitySpanType) => string
-) => {
+export const colorDictByDataKey = (spanData: SpanType[], getKey: (data: SpanType) => string) => {
   const items = spanData.map(getKey);
   const entries = Object.entries(uniq(items));
   const colorLength = backgroundColor.length;

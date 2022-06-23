@@ -39,7 +39,7 @@ export type DailyTimeFormType = {
   preInput: DailyTimeFormPartsType;
 };
 
-export type ActivitySpanType = {
+export type SpanType = {
   index: number;
   span: number;
   activity: string;

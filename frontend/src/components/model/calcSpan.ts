@@ -1,8 +1,8 @@
 import { UseFormWatch } from "react-hook-form";
-import { ActivitySpanType, DailyTimeFormPartsType, DailyTimeFormType } from "./types";
+import { SpanType, DailyTimeFormPartsType, DailyTimeFormType } from "./types";
 
 // 項目間の時間を算出する
-export const calcSpan = (watch: UseFormWatch<DailyTimeFormType>): ActivitySpanType[] => {
+export const calcSpan = (watch: UseFormWatch<DailyTimeFormType>): SpanType[] => {
   const inputData = Object.entries<DailyTimeFormPartsType>(watch("schedule")).map(
     ([index, item]) => {
       return {

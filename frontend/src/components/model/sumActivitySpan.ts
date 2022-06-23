@@ -1,7 +1,7 @@
 import { groupBy } from "@/lib/groupby";
-import { ActivitySpanType } from "./types";
+import { SpanType } from "./types";
 
-export const sumActivitySpan = (spanData: ActivitySpanType[]) => {
+export const sumActivitySpan = (spanData: SpanType[]) => {
   const groups = groupBy(spanData, (d) => d.activity);
   return Object.entries(groups).map(([activity, list]) => ({
     activity,
@@ -9,7 +9,7 @@ export const sumActivitySpan = (spanData: ActivitySpanType[]) => {
   }));
 };
 
-export const sumCategorySpan = (spanData: ActivitySpanType[]) => {
+export const sumCategorySpan = (spanData: SpanType[]) => {
   const groups = groupBy(spanData, (d) => d.category);
   return Object.entries(groups).map(([category, list]) => ({
     category,
