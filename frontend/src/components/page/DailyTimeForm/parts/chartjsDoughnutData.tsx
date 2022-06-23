@@ -4,7 +4,7 @@ import { clockValue, clockLabels } from "../../../model/clockData";
 import { sumActivitySpan } from "../../../model/sumActivitySpan";
 import { ActivitySpanType } from "../../../model/types";
 
-export const generateLegendLabels = (spanData: ActivitySpanType[]) => {
+export const activitySumLegendLabels = (spanData: ActivitySpanType[]) => {
   const activitySum = sumActivitySpan(spanData);
   activitySum.sort((a, b) => b.total - a.total);
   const colorDict = activityColorDict(spanData);

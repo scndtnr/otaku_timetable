@@ -2,7 +2,7 @@ import { UseFormWatch } from "react-hook-form";
 import { Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Text } from "recharts";
 import { Payload } from "recharts/types/component/DefaultLegendContent";
 import { activityColorDict } from "@/components/model/activityColorDict";
-import { calcSpan } from "@/components/model/calcActivitySpan";
+import { calcSpan } from "@/components/model/calcSpan";
 import { clockDataObj } from "@/components/model/clockData";
 import { sumActivitySpan } from "@/components/model/sumActivitySpan";
 import { DailyTimeFormType } from "@/components/model/types";

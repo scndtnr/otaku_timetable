@@ -1,7 +1,6 @@
 import { VStack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { DailyTimeFormType } from "../../model/types";
-import DailyTimeFormField from "../../model/dailyTimeFormField";
 import { ChartjsDoughnut } from "./parts/chartjsDoughnut";
 import DailyTimeWithCategoryFormField from "@/components/model/dailyTimeWithCategoryFormField";
 
@@ -20,7 +19,7 @@ export const DailyTimeForm = () => {
       category: "",
     },
   };
-  const { control, register, getValues, watch, reset, resetField } = useForm({ defaultValues });
+  const { control, register, getValues, watch, resetField } = useForm({ defaultValues });
   const { fields, append, remove, swap } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "schedule", // unique name for your Field Array

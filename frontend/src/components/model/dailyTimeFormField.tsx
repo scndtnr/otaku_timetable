@@ -1,5 +1,5 @@
 import { Box, Button, HStack, Input } from "@chakra-ui/react";
-import { calcSpan } from "./calcActivitySpan";
+import { calcSpan } from "./calcSpan";
 import { sumActivitySpan } from "./sumActivitySpan";
 import { DailyTimeFormFieldProps, DailyTimeFormPartsType } from "./types";
 import { SelectTime } from "./selectForms";

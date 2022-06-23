@@ -1,7 +1,7 @@
 import { UseFormWatch } from "react-hook-form";
 import { DailyTimeFormType } from "../../../model/types";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
-import { calcSpan } from "../../../model/calcActivitySpan";
+import { calcSpan } from "../../../model/calcSpan";
 import { timeGroups } from "../../../model/selectGroups";
 
 const ActivityTable = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {

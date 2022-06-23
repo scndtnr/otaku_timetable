@@ -4,9 +4,9 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Color, Legend, LegendItem } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-import { calcSpan } from "../../../model/calcActivitySpan";
+import { calcSpan } from "../../../model/calcSpan";
 import { DailyTimeFormType } from "../../../model/types";
-import doughnutData, { generateLegendLabels } from "./chartjsDoughnutData";
+import doughnutData, { activitySumLegendLabels } from "./chartjsDoughnutData";
 
 export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {
   const LegendMargin = {
@@ -44,7 +44,7 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
               position: "top",
               labels: {
                 generateLabels: (chart) => {
-                  const legentItems = generateLegendLabels(calcSpan(watch)) as LegendItem[];
+                  const legentItems = activitySumLegendLabels(calcSpan(watch)) as LegendItem[];
                   return legentItems;
                 },
               },
