@@ -31,38 +31,58 @@ export const categorySumLegendLabels = (spanData: SpanType[]) => {
 const doughnutData = (spanData: SpanType[]) => {
   const activityLabels = spanData.map((d) => d.activity);
   const activityData = spanData.map((d) => d.span);
-  const colorDict = colorDictByDataKey(spanData, (d) => d.activity);
+  const activityColorDict = colorDictByDataKey(spanData, (d) => d.activity);
+  const categoryColorDict = colorDictByDataKey(spanData, (d) => d.category);
+
+  // データセットの準備
+  const activityDataset = {
+    label: "Daily Activity",
+    data: activityData,
+    backgroundColor: spanData.map((d) => activityColorDict[d.activity].backgroundColor),
+    borderColor: spanData.map((d) => activityColorDict[d.activity].borderColor),
+    borderWidth: 1,
+    datalabels: {
+      // display: true,
+      align: "end",
+      labels: activityLabels,
+      color: "black",
+      labelBorderColor: spanData.map((d) => activityColorDict[d.activity].borderColor),
+      labelBackgroundColor: "white",
+    },
+  };
+  const activityWithCategoryDataset = {
+    label: "Daily Activity with Category",
+    data: activityData,
+    backgroundColor: spanData.map((d) => categoryColorDict[d.category].backgroundColor),
+    borderColor: spanData.map((d) => categoryColorDict[d.category].borderColor),
+    borderWidth: 1,
+    datalabels: {
+      // display: false,
+      align: "end",
+      labels: activityLabels,
+      color: "black",
+      labelBorderColor: spanData.map((d) => categoryColorDict[d.category].borderColor),
+      labelBackgroundColor: "white",
+    },
+  };
+  const clockDataset = {
+    label: "Clock Hours",
+    data: clockValue,
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderColor: "rgba(192, 192, 192, 0.7)",
+    borderWidth: 1,
+    datalabels: {
+      // display: true,
+      align: "center",
+      labels: clockLabels,
+      color: "gray",
+      labelBorderColor: "rgba(0, 0, 0, 0)",
+      labelBackgroundColor: "rgba(0, 0, 0, 0)",
+    },
+  };
+
   return {
-    datasets: [
-      {
-        label: "Daily Activity",
-        data: activityData,
-        backgroundColor: spanData.map((d) => colorDict[d.activity].backgroundColor),
-        borderColor: spanData.map((d) => colorDict[d.activity].borderColor),
-        borderWidth: 1,
-        datalabels: {
-          align: "end",
-          labels: activityLabels,
-          color: "black",
-          labelBorderColor: spanData.map((d) => colorDict[d.activity].borderColor),
-          labelBackgroundColor: "white",
-        },
-      },
-      {
-        label: "Clock Hours",
-        data: clockValue,
-        backgroundColor: "rgba(0, 0, 0, 0)",
-        borderColor: "rgba(192, 192, 192, 0.7)",
-        borderWidth: 1,
-        datalabels: {
-          align: "center",
-          labels: clockLabels,
-          color: "gray",
-          labelBorderColor: "rgba(0, 0, 0, 0)",
-          labelBackgroundColor: "rgba(0, 0, 0, 0)",
-        },
-      },
-    ],
+    datasets: [activityWithCategoryDataset, clockDataset],
   } as unknown as ChartData<"doughnut", number[], unknown>;
 };
 

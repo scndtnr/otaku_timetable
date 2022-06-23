@@ -6,7 +6,10 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import { calcSpan } from "../../../model/calcSpan";
 import { DailyTimeFormType } from "../../../model/types";
-import doughnutData, { activitySumLegendLabels } from "./chartjsDoughnutData";
+import doughnutData, {
+  activitySumLegendLabels,
+  categorySumLegendLabels,
+} from "./chartjsDoughnutData";
 
 export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {
   const LegendMargin = {
@@ -44,7 +47,8 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
               position: "top",
               labels: {
                 generateLabels: (chart) => {
-                  const legentItems = activitySumLegendLabels(calcSpan(watch)) as LegendItem[];
+                  // const legentItems = activitySumLegendLabels(calcSpan(watch)) as LegendItem[];
+                  const legentItems = categorySumLegendLabels(calcSpan(watch)) as LegendItem[];
                   return legentItems;
                 },
               },
