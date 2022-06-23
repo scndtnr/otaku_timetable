@@ -24,10 +24,11 @@ const borderColor = [
 export const activityColorDict = (spanData: ActivitySpanType[]) => {
   const activities = spanData.map((d) => d.activity);
   const activiryEntries = Object.entries(uniq(activities));
+  const colorLength = backgroundColor.length;
   return Object.assign(
     {},
     ...activiryEntries.map(([index, act]) => {
-      const i: number = parseInt(index) % 6;
+      const i: number = parseInt(index) % colorLength;
       return {
         [act]: {
           backgroundColor: backgroundColor[i],
