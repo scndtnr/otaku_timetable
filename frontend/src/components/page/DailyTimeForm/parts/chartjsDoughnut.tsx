@@ -36,7 +36,7 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: 30,
+            padding: 40,
           },
           plugins: {
             legend: {
@@ -59,7 +59,7 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
                 (ctx.dataset.datalabels as any).labelBackgroundColor as Color,
               display: (ctx) => ctx.dataset.data[ctx.dataIndex] !== 0,
               align: (ctx) => ctx.dataset.datalabels?.align as "center" | "end",
-              offset: 10,
+              offset: (ctx) => (ctx.dataIndex % 2 === 0 ? 30 : 0),
               formatter: (value, ctx) => {
                 const labels = ctx.dataset.datalabels?.labels;
                 return labels ? labels[ctx.dataIndex] : "undefined";
