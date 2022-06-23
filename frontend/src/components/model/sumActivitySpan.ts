@@ -8,3 +8,11 @@ export const sumActivitySpan = (spanData: ActivitySpanType[]) => {
     total: list ? list.reduce((sum, row) => sum + row.span, 0) : 0,
   }));
 };
+
+export const sumCategorySpan = (spanData: ActivitySpanType[]) => {
+  const groups = groupBy(spanData, (d) => d.category);
+  return Object.entries(groups).map(([category, list]) => ({
+    category,
+    total: list ? list.reduce((sum, row) => sum + row.span, 0) : 0,
+  }));
+};
