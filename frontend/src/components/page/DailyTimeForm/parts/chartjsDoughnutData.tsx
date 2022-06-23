@@ -1,7 +1,7 @@
 import { ChartData } from "chart.js";
 import { colorDictByDataKey } from "../../../model/ColorDict";
 import { clockValue, clockLabels } from "../../../model/clockData";
-import { sumActivitySpan } from "../../../model/sumActivitySpan";
+import { sumActivitySpan } from "../../../model/sumSpan";
 import { SpanType } from "../../../model/types";
 
 export const activitySumLegendLabels = (spanData: SpanType[]) => {

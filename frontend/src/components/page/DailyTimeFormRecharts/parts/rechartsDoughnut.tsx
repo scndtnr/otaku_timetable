@@ -4,7 +4,7 @@ import { Payload } from "recharts/types/component/DefaultLegendContent";
 import { colorDictByDataKey } from "@/components/model/ColorDict";
 import { calcSpan } from "@/components/model/calcSpan";
 import { clockDataObj } from "@/components/model/clockData";
-import { sumActivitySpan } from "@/components/model/sumActivitySpan";
+import { sumActivitySpan } from "@/components/model/sumSpan";
 import { DailyTimeFormType } from "@/components/model/types";
 import { Box, Stack } from "@chakra-ui/react";
 
