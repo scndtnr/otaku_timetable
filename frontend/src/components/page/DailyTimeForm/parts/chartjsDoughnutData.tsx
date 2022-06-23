@@ -1,7 +1,7 @@
 import { ChartData } from "chart.js";
 import { colorDictByDataKey } from "../../../model/ColorDict";
 import { clockValue, clockLabels } from "../../../model/clockData";
-import { sumActivitySpan } from "../../../model/sumSpan";
+import { sumActivitySpan, sumCategorySpan } from "../../../model/sumSpan";
 import { SpanType } from "../../../model/types";
 
 export const activitySumLegendLabels = (spanData: SpanType[]) => {
@@ -12,6 +12,18 @@ export const activitySumLegendLabels = (spanData: SpanType[]) => {
     return {
       text: `${item.activity}: ${item.total} h`,
       fillStyle: colorDict[item.activity].backgroundColor,
+    };
+  });
+};
+
+export const categorySumLegendLabels = (spanData: SpanType[]) => {
+  const categorySum = sumCategorySpan(spanData);
+  categorySum.sort((a, b) => b.total - a.total);
+  const colorDict = colorDictByDataKey(spanData, (d) => d.category);
+  return categorySum.map((item) => {
+    return {
+      text: `${item.category}: ${item.total} h`,
+      fillStyle: colorDict[item.category].backgroundColor,
     };
   });
 };
