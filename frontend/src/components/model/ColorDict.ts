@@ -21,16 +21,19 @@ const borderColor = [
   "rgba(192, 192, 192, 1)",
 ];
 
-export const activityColorDict = (spanData: ActivitySpanType[]) => {
-  const activities = spanData.map((d) => d.activity);
-  const activiryEntries = Object.entries(uniq(activities));
+export const colorDictByDataKey = (
+  spanData: ActivitySpanType[],
+  getKey: (data: ActivitySpanType) => string
+) => {
+  const items = spanData.map(getKey);
+  const entries = Object.entries(uniq(items));
   const colorLength = backgroundColor.length;
   return Object.assign(
     {},
-    ...activiryEntries.map(([index, act]) => {
+    ...entries.map(([index, item]) => {
       const i: number = parseInt(index) % colorLength;
       return {
-        [act]: {
+        [item]: {
           backgroundColor: backgroundColor[i],
           borderColor: borderColor[i],
         },

@@ -1,7 +1,7 @@
 import { UseFormWatch } from "react-hook-form";
 import { Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Text } from "recharts";
 import { Payload } from "recharts/types/component/DefaultLegendContent";
-import { activityColorDict } from "@/components/model/ColorDict";
+import { colorDictByDataKey } from "@/components/model/ColorDict";
 import { calcSpan } from "@/components/model/calcSpan";
 import { clockDataObj } from "@/components/model/clockData";
 import { sumActivitySpan } from "@/components/model/sumActivitySpan";
@@ -12,7 +12,7 @@ const RechartsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
   // データ設定
   const spanData = calcSpan(watch).filter((d) => d.span !== 0);
   const clockData = clockDataObj; // 時計用データ
-  const colorDict = activityColorDict(spanData); // ユニークな活動名毎の色
+  const colorDict = colorDictByDataKey(spanData, (d) => d.activity); // ユニークな活動名毎の色
 
   // Lenged設定（活動毎のスパン合計を表示する）
   const activitySum = sumActivitySpan(spanData);

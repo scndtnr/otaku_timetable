@@ -1,5 +1,5 @@
 import { ChartData } from "chart.js";
-import { activityColorDict } from "../../../model/ColorDict";
+import { colorDictByDataKey } from "../../../model/ColorDict";
 import { clockValue, clockLabels } from "../../../model/clockData";
 import { sumActivitySpan } from "../../../model/sumActivitySpan";
 import { ActivitySpanType } from "../../../model/types";
@@ -7,7 +7,7 @@ import { ActivitySpanType } from "../../../model/types";
 export const activitySumLegendLabels = (spanData: ActivitySpanType[]) => {
   const activitySum = sumActivitySpan(spanData);
   activitySum.sort((a, b) => b.total - a.total);
-  const colorDict = activityColorDict(spanData);
+  const colorDict = colorDictByDataKey(spanData, (d) => d.activity);
   return activitySum.map((item) => {
     return {
       text: `${item.activity}: ${item.total} h`,
@@ -19,7 +19,7 @@ export const activitySumLegendLabels = (spanData: ActivitySpanType[]) => {
 const doughnutData = (spanData: ActivitySpanType[]) => {
   const activityLabels = spanData.map((d) => d.activity);
   const activityData = spanData.map((d) => d.span);
-  const colorDict = activityColorDict(spanData);
+  const colorDict = colorDictByDataKey(spanData, (d) => d.activity);
   return {
     datasets: [
       {
