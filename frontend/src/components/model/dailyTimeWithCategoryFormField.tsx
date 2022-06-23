@@ -1,10 +1,10 @@
-import { Box, Button, HStack, Input } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, VStack } from "@chakra-ui/react";
 import { calcSpan } from "./calcActivitySpan";
 import { sumActivitySpan } from "./sumActivitySpan";
-import { DailyTimeFormFieldProps, DailyTimeFormPartsType } from "./types";
+import { DailyTimeFormFieldProps, DailyTimeWithCategoryFormPartsType } from "./types";
 import { SelectTime } from "./selectForms";
 
-const DailyTimeFormField = ({
+const DailyTimeWithCategoryFormField = ({
   fields,
   control,
   register,
@@ -20,8 +20,8 @@ const DailyTimeFormField = ({
     // console.log("--- OnBlur Start ---");
 
     // 参照用の配列を作成する
-    const timeList = Object.values<DailyTimeFormPartsType>(watch("schedule")).map((item) =>
-      parseFloat(item.time)
+    const timeList = Object.values<DailyTimeWithCategoryFormPartsType>(watch("schedule")).map(
+      (item) => parseFloat(item.time)
     );
 
     // バブルソート
@@ -43,20 +43,30 @@ const DailyTimeFormField = ({
     <Box padding={2}>
       {/* 実入力 */}
       {fields.map((item, index) => (
-        <HStack key={item.id} backgroundColor="gray.50">
-          <SelectTime
-            key={`${item.id}-time`}
-            name={`schedule.${index}.time`}
-            control={control}
-            placeholder="00:00"
-            onBlur={handleSortFormElements}
-          />
-          <Input
-            key={`${item.id}-activity-text`}
-            placeholder="Input Activity"
-            maxW="300"
-            {...register(`schedule.${index}.activity`)}
-          />
+        <HStack key={`${item.id}-form-element`} backgroundColor="gray.50" paddingBottom={2}>
+          <VStack key={`${item.id}-inputs`}>
+            <HStack key={`${item.id}-line`}>
+              <SelectTime
+                key={`${item.id}-time`}
+                name={`schedule.${index}.time`}
+                control={control}
+                placeholder="00:00"
+                onBlur={handleSortFormElements}
+              />
+              <Input
+                key={`${item.id}-category-text`}
+                placeholder="Input category"
+                maxW="300"
+                {...register(`schedule.${index}.category`)}
+              />
+            </HStack>
+            <Input
+              key={`${item.id}-activity-text`}
+              placeholder="Input Activity"
+              maxW="300"
+              {...register(`schedule.${index}.activity`)}
+            />
+          </VStack>
           {index !== 0 && (
             <Button
               key={`${item.id}-remove`}
@@ -68,19 +78,20 @@ const DailyTimeFormField = ({
           )}
         </HStack>
       ))}
+
       {/* 仮入力 */}
       <HStack backgroundColor="orange.50">
-        <SelectTime
-          name={`preInput.time`}
-          control={control}
-          placeholder="00:00"
-          onBlur={handleSortFormElements}
-        />
-        <Input placeholder="Input Activity" maxW="300" {...register(`preInput.activity`)} />
+        <VStack>
+          <HStack>
+            <SelectTime name={`preInput.time`} control={control} placeholder="00:00" />
+            <Input placeholder="Input category" maxW="300" {...register(`preInput.category`)} />
+          </HStack>
+          <Input placeholder="Input Activity" maxW="300" {...register(`preInput.activity`)} />
+        </VStack>
         <Button
           onClick={() => {
             const pre = getValues("preInput");
-            append({ time: pre.time, activity: pre.activity, category: "" });
+            append({ time: pre.time, activity: pre.activity, category: pre.category });
             handleSortFormElements();
             resetField("preInput");
           }}
@@ -89,7 +100,6 @@ const DailyTimeFormField = ({
           +
         </Button>
       </HStack>
-
       <Button
         onClick={() => {
           console.log(JSON.stringify(getValues()));
@@ -104,4 +114,4 @@ const DailyTimeFormField = ({
   );
 };
 
-export default DailyTimeFormField;
+export default DailyTimeWithCategoryFormField;

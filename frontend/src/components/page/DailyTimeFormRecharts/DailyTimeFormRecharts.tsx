@@ -13,15 +13,17 @@ export const DailyTimeFormRecharts = () => {
     schedule: [
       {
         time: "0.0",
-        activity: "睡眠",
-      },
-      {
-        time: "6.0",
-        activity: "起床",
+        activity: "",
+        category: "",
       },
     ],
+    preInput: {
+      time: "0.0",
+      activity: "",
+      category: "",
+    },
   };
-  const { control, register, getValues, watch } = useForm({ defaultValues });
+  const { control, register, getValues, watch, resetField } = useForm({ defaultValues });
   const { fields, append, remove, swap } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "schedule", // unique name for your Field Array
@@ -37,6 +39,7 @@ export const DailyTimeFormRecharts = () => {
           control={control}
           register={register}
           getValues={getValues}
+          resetField={resetField}
           watch={watch}
           append={append}
           remove={remove}
