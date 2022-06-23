@@ -1,13 +1,8 @@
 import { VStack } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { DailyTimeFormType } from "../../model/types";
-import dynamic from "next/dynamic";
 import DailyTimeFormField from "../../model/dailyTimeFormField";
 import { ChartjsDoughnut } from "./parts/chartjsDoughnut";
-
-const RechartsDoughnutWithoutSSR = dynamic(() => import("./parts/rechartsDoughnut"), {
-  ssr: false,
-});
 
 export const DailyTimeForm = () => {
   const defaultValues: DailyTimeFormType = {
@@ -31,7 +26,6 @@ export const DailyTimeForm = () => {
   return (
     <>
       <VStack>
-        {/* <RechartsDoughnutWithoutSSR watch={watch} /> */}
         <ChartjsDoughnut watch={watch} />
 
         <DailyTimeFormField
