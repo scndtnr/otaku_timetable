@@ -20,7 +20,7 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
         // Call original function and bind scope in order to use `this` correctly inside it
         originalFit.bind(chart.legend)();
         // Change the height as suggested in another answers
-        this.height += 20;
+        this.height += 40;
       };
     },
   };
@@ -29,14 +29,14 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
   ChartJS.register(ArcElement, ChartDataLabels, Legend, LegendMargin);
 
   return (
-    <Container className="chart-container" position="relative" h="400" w="full">
+    <Container className="chart-container" position="relative" h="450" w="full">
       <Doughnut
         data={doughnutData(calcSpan(watch))}
         options={{
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: 40,
+            padding: 45,
           },
           plugins: {
             legend: {
