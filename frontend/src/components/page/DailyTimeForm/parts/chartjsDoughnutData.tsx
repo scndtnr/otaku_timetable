@@ -1,5 +1,5 @@
 import { ChartData } from "chart.js";
-import { activityColorDict } from "../../../model/activityColorDict";
+import { activityColorDict } from "../../../model/ColorDict";
 import { clockValue, clockLabels } from "../../../model/clockData";
 import { sumActivitySpan } from "../../../model/sumActivitySpan";
 import { ActivitySpanType } from "../../../model/types";
