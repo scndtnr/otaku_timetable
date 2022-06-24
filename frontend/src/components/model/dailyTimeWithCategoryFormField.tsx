@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Input, VStack } from "@chakra-ui/react";
 import { calcSpan } from "./calcSpan";
 import { sumActivitySpan } from "./sumSpan";
-import { DailyTimeFormFieldProps, DailyTimeWithCategoryFormPartsType } from "./types";
+import { DailyTimeFormFieldProps, DailyTimeFormPartsType } from "./types";
 import { SelectTime } from "./selectForms";
 
 const DailyTimeWithCategoryFormField = ({
@@ -20,8 +20,8 @@ const DailyTimeWithCategoryFormField = ({
     // console.log("--- OnBlur Start ---");
 
     // 参照用の配列を作成する
-    const timeList = Object.values<DailyTimeWithCategoryFormPartsType>(watch("schedule")).map(
-      (item) => parseFloat(item.time)
+    const timeList = Object.values<DailyTimeFormPartsType>(watch("schedule")).map((item) =>
+      parseFloat(item.time)
     );
 
     // バブルソート

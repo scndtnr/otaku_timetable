@@ -28,12 +28,6 @@ export type DailyTimeFormPartsType = {
   category: string;
 };
 
-export type DailyTimeWithCategoryFormPartsType = {
-  time: string;
-  activity: string;
-  category: string;
-};
-
 export type DailyTimeFormType = {
   schedule: DailyTimeFormPartsType[];
   preInput: DailyTimeFormPartsType;
