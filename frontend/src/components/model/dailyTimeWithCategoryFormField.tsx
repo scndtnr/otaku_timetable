@@ -1,10 +1,10 @@
-import { Box, Button, HStack, Input, VStack } from "@chakra-ui/react";
+import { Button, HStack, Input, Spacer, Stack, VStack } from "@chakra-ui/react";
 import { calcSpan } from "./calcSpan";
 import { sumActivitySpan } from "./sumSpan";
 import { DailyTimeFormFieldProps, DailyTimeFormPartsType } from "./types";
 import { SelectTime } from "./selectForms";
 import { handleSortFormElements } from "./sortFormElementsByTime";
-import { UrlButton } from "./shareButton";
+import { SocialShareButtons, UrlButton } from "./shareButton";
 
 const DailyTimeWithCategoryFormField = ({
   fields,
@@ -18,7 +18,10 @@ const DailyTimeWithCategoryFormField = ({
   swap,
 }: DailyTimeFormFieldProps) => {
   return (
-    <Box padding={2}>
+    <Stack padding={2}>
+      <SocialShareButtons watch={watch} />
+      <UrlButton watch={watch} />
+      <Spacer />
       {/* 実入力 */}
       {fields.map((item, index) => (
         <HStack key={`${item.id}-form-element`} backgroundColor="gray.50" paddingBottom={2}>
@@ -78,7 +81,6 @@ const DailyTimeWithCategoryFormField = ({
           +
         </Button>
       </HStack>
-      <UrlButton watch={watch} />
       <Button
         onClick={() => {
           console.log(JSON.stringify(getValues()));
@@ -89,7 +91,7 @@ const DailyTimeWithCategoryFormField = ({
       >
         Log
       </Button>
-    </Box>
+    </Stack>
   );
 };
 
