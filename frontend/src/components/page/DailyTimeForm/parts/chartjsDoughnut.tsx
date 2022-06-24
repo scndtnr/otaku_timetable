@@ -10,6 +10,7 @@ import doughnutData, {
   activitySumLegendLabels,
   categorySumLegendLabels,
 } from "./chartjsDoughnutData";
+import { LabelOptions } from "chartjs-plugin-datalabels/types/options";
 
 export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {
   const LegendMargin = {
@@ -61,7 +62,28 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
               borderColor: (ctx) => (ctx.dataset.datalabels as any).labelBorderColor as Color,
               backgroundColor: (ctx) =>
                 (ctx.dataset.datalabels as any).labelBackgroundColor as Color,
-              display: (ctx) => ctx.dataset.data[ctx.dataIndex] !== 0,
+              display: (ctx) => {
+                // span === 0 なら表示しない
+                if (ctx.dataset.data[ctx.dataIndex] === 0) {
+                  return false;
+                }
+
+                // datalabels が存在しないなら全て表示する
+                const datalabels = ctx.dataset.datalabels;
+                if (!datalabels) {
+                  return true;
+                }
+
+                // 先頭と末尾が同じラベルなら、先頭は表示しない
+                const labels = datalabels.labels as Record<string, LabelOptions | null>;
+                const maxIndex: number = (datalabels as any).labelLength - 1;
+                if (ctx.dataIndex === 0 && labels[0] === labels[maxIndex]) {
+                  return false;
+                }
+
+                // それ以外は表示する
+                return true;
+              },
               align: (ctx) => ctx.dataset.datalabels?.align as "center" | "end",
               offset: (ctx) => (ctx.dataIndex % 2 === 0 ? 30 : 0),
               formatter: (value, ctx) => {

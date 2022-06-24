@@ -46,6 +46,7 @@ const doughnutData = (spanData: SpanType[]) => {
       // display: true,
       align: "end",
       labels: activityLabels,
+      labelLength: activityLabels.length,
       color: "black",
       labelBorderColor: spanData.map((d) => activityColorDict[d.activity].borderColor),
       labelBackgroundColor: "white",
@@ -63,6 +64,7 @@ const doughnutData = (spanData: SpanType[]) => {
       // display: false,
       align: "end",
       labels: activityLabels,
+      labelLength: activityLabels.length,
       color: "black",
       labelBorderColor: spanData.map(
         (d) => categoryColorDict[getCategoryOrActivity(d)].borderColor
