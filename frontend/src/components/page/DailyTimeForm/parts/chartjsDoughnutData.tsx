@@ -29,6 +29,13 @@ export const categorySumLegendLabels = (spanData: SpanType[]) => {
   });
 };
 
+const wordsWrap = (words: string[], lineLength: number) => {
+  return words.map((word) => {
+    const regex = new RegExp(`.{1,${lineLength}}`, "g");
+    return word.match(regex)?.join("\n");
+  });
+};
+
 const doughnutData = (spanData: SpanType[]) => {
   const activityLabels = spanData.map((d) => d.activity);
   const activityData = spanData.map((d) => d.span);
@@ -63,7 +70,10 @@ const doughnutData = (spanData: SpanType[]) => {
     datalabels: {
       // display: false,
       align: "end",
-      labels: activityLabels,
+      font: {
+        size: 10,
+      },
+      labels: wordsWrap(activityLabels, 5),
       labelLength: activityLabels.length,
       color: "black",
       labelBorderColor: spanData.map(
