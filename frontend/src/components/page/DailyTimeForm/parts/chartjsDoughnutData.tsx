@@ -3,6 +3,7 @@ import { colorDictByDataKey } from "../../../model/ColorDict";
 import { clockValue, clockLabels } from "../../../model/clockData";
 import { sumActivitySpan, sumCategorySpan } from "../../../model/sumSpan";
 import { SpanType } from "../../../model/types";
+import { getCategoryOrActivity } from "@/components/model/getKey";
 
 export const activitySumLegendLabels = (spanData: SpanType[]) => {
   const activitySum = sumActivitySpan(spanData);
@@ -19,7 +20,7 @@ export const activitySumLegendLabels = (spanData: SpanType[]) => {
 export const categorySumLegendLabels = (spanData: SpanType[]) => {
   const categorySum = sumCategorySpan(spanData);
   categorySum.sort((a, b) => b.total - a.total);
-  const colorDict = colorDictByDataKey(spanData, (d) => d.category);
+  const colorDict = colorDictByDataKey(spanData, getCategoryOrActivity);
   return categorySum.map((item) => {
     return {
       text: `${item.category}: ${item.total} h`,
@@ -32,7 +33,7 @@ const doughnutData = (spanData: SpanType[]) => {
   const activityLabels = spanData.map((d) => d.activity);
   const activityData = spanData.map((d) => d.span);
   const activityColorDict = colorDictByDataKey(spanData, (d) => d.activity);
-  const categoryColorDict = colorDictByDataKey(spanData, (d) => d.category);
+  const categoryColorDict = colorDictByDataKey(spanData, getCategoryOrActivity);
 
   // データセットの準備
   const activityDataset = {
@@ -53,15 +54,19 @@ const doughnutData = (spanData: SpanType[]) => {
   const activityWithCategoryDataset = {
     label: "Daily Activity with Category",
     data: activityData,
-    backgroundColor: spanData.map((d) => categoryColorDict[d.category].backgroundColor),
-    borderColor: spanData.map((d) => categoryColorDict[d.category].borderColor),
+    backgroundColor: spanData.map(
+      (d) => categoryColorDict[getCategoryOrActivity(d)].backgroundColor
+    ),
+    borderColor: spanData.map((d) => categoryColorDict[getCategoryOrActivity(d)].borderColor),
     borderWidth: 1,
     datalabels: {
       // display: false,
       align: "end",
       labels: activityLabels,
       color: "black",
-      labelBorderColor: spanData.map((d) => categoryColorDict[d.category].borderColor),
+      labelBorderColor: spanData.map(
+        (d) => categoryColorDict[getCategoryOrActivity(d)].borderColor
+      ),
       labelBackgroundColor: "white",
     },
   };
