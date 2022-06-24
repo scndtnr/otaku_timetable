@@ -4,6 +4,7 @@ import { sumActivitySpan } from "./sumSpan";
 import { DailyTimeFormFieldProps, DailyTimeFormPartsType } from "./types";
 import { SelectTime } from "./selectForms";
 import { handleSortFormElements } from "./sortFormElementsByTime";
+import { UrlButton } from "./shareButton";
 
 const DailyTimeWithCategoryFormField = ({
   fields,
@@ -77,6 +78,7 @@ const DailyTimeWithCategoryFormField = ({
           +
         </Button>
       </HStack>
+      <UrlButton watch={watch} />
       <Button
         onClick={() => {
           console.log(JSON.stringify(getValues()));
