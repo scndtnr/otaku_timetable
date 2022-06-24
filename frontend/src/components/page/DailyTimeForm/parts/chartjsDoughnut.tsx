@@ -40,7 +40,7 @@ export const ChartjsDoughnut = ({ watch }: { watch: UseFormWatch<DailyTimeFormTy
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: 40,
+            padding: 55,
           },
           cutout: "60%",
           plugins: {
