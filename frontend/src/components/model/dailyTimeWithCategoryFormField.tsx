@@ -19,7 +19,7 @@ const DailyTimeWithCategoryFormField = ({
 }: DailyTimeFormFieldProps) => {
   return (
     <Stack padding={2}>
-      <SocialShareButtons watch={watch} />
+      {/* <SocialShareButtons watch={watch} /> */}
       <UrlButton watch={watch} />
       <Spacer />
       {/* 実入力 */}
