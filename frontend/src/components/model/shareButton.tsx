@@ -1,8 +1,8 @@
 import { Button, HStack, Input, Stack, useClipboard } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { UseFormWatch } from "react-hook-form";
-import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from "react-share";
+import { FieldValues, UseFormWatch } from "react-hook-form";
+// import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from "react-share";
 import { DailyTimeFormPartsType, DailyTimeFormType } from "./types";
 
 export const encodeSchedule = (schedule: DailyTimeFormPartsType[]) =>
@@ -39,7 +39,11 @@ const generateQueryString = (watch: UseFormWatch<DailyTimeFormType>): string => 
     .join("&");
 };
 
-export const UrlButton = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {
+type ShareButoonType<T extends FieldValues> = {
+  watch: UseFormWatch<DailyTimeFormType>;
+} & T;
+
+export const UrlButton = <T extends FieldValues>({ watch, field }: ShareButoonType<T>) => {
   const [url, setUrl] = useState("");
   const { hasCopied, onCopy } = useClipboard(url);
 
@@ -51,9 +55,9 @@ export const UrlButton = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
   };
 
   return (
-    <HStack>
-      <Button onClick={handleClick}>URL</Button>
-      <Input readOnly value={url} maxW={40} />
+    <HStack {...field}>
+      <Button onClick={handleClick}>URL生成</Button>
+      <Input readOnly value={url} />
       <Button onClick={onCopy} ml={2}>
         {hasCopied ? "Copied" : "Copy"}
       </Button>
@@ -61,7 +65,7 @@ export const UrlButton = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> })
   );
 };
 
-export const SocialShareButtons = ({ watch }: { watch: UseFormWatch<DailyTimeFormType> }) => {
+export const SocialShareButtons = <T extends FieldValues>({ watch, field }: ShareButoonType<T>) => {
   const { pathname } = useRouter();
   const domain = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   const url = `${domain}${pathname}?${generateQueryString(watch)}`;
@@ -70,8 +74,8 @@ export const SocialShareButtons = ({ watch }: { watch: UseFormWatch<DailyTimeFor
   const borderRadius = 20;
 
   return (
-    <HStack>
-      <Stack>
+    <HStack {...field}>
+      {/* <Stack>
         <TwitterShareButton url={url} title="ページタイトル">
           <TwitterIcon size={size} borderRadius={borderRadius} />
         </TwitterShareButton>
@@ -80,7 +84,7 @@ export const SocialShareButtons = ({ watch }: { watch: UseFormWatch<DailyTimeFor
         <LineShareButton url={url} title="ページタイトル">
           <LineIcon size={size} borderRadius={borderRadius} />
         </LineShareButton>
-      </Stack>
+      </Stack> */}
     </HStack>
   );
 };
