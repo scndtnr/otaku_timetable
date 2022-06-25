@@ -100,7 +100,7 @@ const DailyTimeWithCategoryFormField = ({
             const pre = getValues("preInput");
             append(
               { time: pre.time, activity: pre.activity, category: pre.category },
-              { focusName: "preInput.time" }
+              { shouldFocus: false }
             );
             handleSortFormElements(watch, swap)();
             resetField("preInput");
