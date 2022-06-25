@@ -20,7 +20,7 @@ export const DailyTableForm = () => {
     },
   };
   const { control, register, getValues, watch, resetField } = useForm({ defaultValues });
-  const { fields, append, remove, swap } = useFieldArray({
+  const { fields, append, remove, swap, replace } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "schedule", // unique name for your Field Array
   });
@@ -38,6 +38,7 @@ export const DailyTableForm = () => {
           append={append}
           remove={remove}
           swap={swap}
+          replace={replace}
         />
         <ActivityTable watch={watch} />
       </VStack>
