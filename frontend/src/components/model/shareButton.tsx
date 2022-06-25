@@ -3,12 +3,19 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { FieldValues, UseFormWatch } from "react-hook-form";
 import { DailyTimeFormPartsType, DailyTimeFormType } from "./types";
+
 const rison = require("rison-node");
+const LZString = require("lz-string");
 
-export const encodeSchedule = (schedule: DailyTimeFormPartsType[]): string =>
-  rison.encode(schedule);
+export const encodeSchedule = (schedule: DailyTimeFormPartsType[]): string => {
+  const scheduleList = schedule.map((s) => [s.time, s.category, s.activity]);
+  return LZString.compressToEncodedURIComponent(rison.encode(scheduleList));
+};
 
-export const decodeSchedule = (encodedSchedule: string) => rison.decode(encodedSchedule);
+export const decodeSchedule = (encodedSchedule: string) =>
+  rison
+    .decode(LZString.decompressFromEncodedURIComponent(encodedSchedule))
+    .map((s: string[]) => ({ time: s[0], category: s[1], activity: s[2] }));
 
 const generateQueryString = (watch: UseFormWatch<DailyTimeFormType>): string => {
   const paramsObj = {
