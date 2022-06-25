@@ -124,18 +124,19 @@ const DailyTimeWithCategoryFormField = ({
       <Button
         onClick={() => {
           const sampleData = [
-            { time: "0.0", activity: "睡眠", category: "生活" },
-            { time: "6.0", activity: "朝の支度", category: "生活" },
-            { time: "7.0", activity: "出勤", category: "仕事" },
-            { time: "8.0", activity: "仕事", category: "仕事" },
+            { time: "1.5", activity: "睡眠", category: "生活" },
+            { time: "7.0", activity: "朝の支度", category: "生活" },
+            { time: "8.0", activity: "出勤", category: "仕事" },
+            { time: "9.0", activity: "仕事", category: "仕事" },
             { time: "12.0", activity: "休憩", category: "休憩" },
             { time: "13.0", activity: "仕事", category: "仕事" },
-            { time: "21.0", activity: "退勤", category: "仕事" },
-            { time: "22.0", activity: "風呂", category: "生活" },
-            { time: "23.0", activity: "夕食", category: "生活" },
-            { time: "23.5", activity: "翌日の準備", category: "生活" },
+            { time: "22.5", activity: "退勤", category: "仕事" },
+            { time: "23.5", activity: "風呂", category: "生活" },
+            { time: "0.5", activity: "夕食", category: "生活" },
+            { time: "1.0", activity: "翌日の準備", category: "生活" },
           ];
           replace(sampleData);
+          handleSortFormElements(watch, swap)();
         }}
         backgroundColor="blue.100"
         _hover={{
