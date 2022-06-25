@@ -1,8 +1,7 @@
-import { Button, HStack, Input, Stack, useClipboard } from "@chakra-ui/react";
+import { Button, HStack, Input, useClipboard } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FieldValues, UseFormWatch } from "react-hook-form";
-// import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from "react-share";
 import { DailyTimeFormPartsType, DailyTimeFormType } from "./types";
 
 export const encodeSchedule = (schedule: DailyTimeFormPartsType[]) =>
@@ -61,30 +60,6 @@ export const UrlButton = <T extends FieldValues>({ watch, field }: ShareButoonTy
       <Button onClick={onCopy} ml={2}>
         {hasCopied ? "Copied" : "Copy"}
       </Button>
-    </HStack>
-  );
-};
-
-export const SocialShareButtons = <T extends FieldValues>({ watch, field }: ShareButoonType<T>) => {
-  const { pathname } = useRouter();
-  const domain = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
-  const url = `${domain}${pathname}?${generateQueryString(watch)}`;
-
-  const size = 36;
-  const borderRadius = 20;
-
-  return (
-    <HStack {...field}>
-      {/* <Stack>
-        <TwitterShareButton url={url} title="ページタイトル">
-          <TwitterIcon size={size} borderRadius={borderRadius} />
-        </TwitterShareButton>
-      </Stack>
-      <Stack>
-        <LineShareButton url={url} title="ページタイトル">
-          <LineIcon size={size} borderRadius={borderRadius} />
-        </LineShareButton>
-      </Stack> */}
     </HStack>
   );
 };
