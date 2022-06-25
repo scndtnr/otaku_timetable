@@ -57,7 +57,7 @@ export const UrlButton = <T extends FieldValues>({ watch, field }: ShareButoonTy
   return (
     <HStack {...field}>
       <Button onClick={handleClick}>URL生成</Button>
-      <Input readOnly value={url} />
+      <Input readOnly value={url} maxW="200px" />
       <Button onClick={onCopy} ml={2}>
         {hasCopied ? "Copied" : "Copy"}
       </Button>
