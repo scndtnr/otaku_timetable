@@ -7,7 +7,6 @@ import {
   UseFormGetValues,
   UseFormRegister,
   UseFormResetField,
-  UseFormSetFocus,
   UseFormWatch,
 } from "react-hook-form";
 
@@ -17,7 +16,6 @@ export type DailyTimeFormFieldProps = {
   register: UseFormRegister<DailyTimeFormType>;
   getValues: UseFormGetValues<DailyTimeFormType>;
   resetField: UseFormResetField<DailyTimeFormType>;
-  // setFocus: UseFormSetFocus<DailyTimeFormType>;
   watch: UseFormWatch<DailyTimeFormType>;
   append: UseFieldArrayAppend<DailyTimeFormType, "schedule">;
   remove: UseFieldArrayRemove;

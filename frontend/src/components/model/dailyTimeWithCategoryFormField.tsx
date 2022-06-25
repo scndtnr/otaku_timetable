@@ -72,7 +72,10 @@ const DailyTimeWithCategoryFormField = ({
         <Button
           onClick={() => {
             const pre = getValues("preInput");
-            append({ time: pre.time, activity: pre.activity, category: pre.category });
+            append(
+              { time: pre.time, activity: pre.activity, category: pre.category },
+              { focusName: "preInput.time" }
+            );
             handleSortFormElements(watch, swap)();
             resetField("preInput");
           }}
