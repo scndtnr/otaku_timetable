@@ -4,7 +4,7 @@ import { sumActivitySpan } from "./sumSpan";
 import { DailyTimeFormFieldProps } from "./types";
 import { SelectTime } from "./selectForms";
 import { handleSortFormElements } from "./sortFormElementsByTime";
-import { SocialShareButtons, UrlButton } from "./shareButton";
+import { UrlButton } from "./shareButton";
 import { timeGroups } from "./selectGroups";
 
 const DailyTimeWithCategoryFormField = ({
