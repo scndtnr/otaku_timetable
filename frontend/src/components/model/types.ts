@@ -3,6 +3,7 @@ import {
   FieldArrayWithId,
   UseFieldArrayAppend,
   UseFieldArrayRemove,
+  UseFieldArrayReplace,
   UseFieldArraySwap,
   UseFormGetValues,
   UseFormRegister,
@@ -20,6 +21,7 @@ export type DailyTimeFormFieldProps = {
   append: UseFieldArrayAppend<DailyTimeFormType, "schedule">;
   remove: UseFieldArrayRemove;
   swap: UseFieldArraySwap;
+  replace: UseFieldArrayReplace<DailyTimeFormType, "schedule">;
 };
 
 export type DailyTimeFormPartsType = {

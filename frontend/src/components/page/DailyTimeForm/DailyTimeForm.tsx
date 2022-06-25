@@ -53,6 +53,7 @@ export const DailyTimeForm = () => {
           append={append}
           remove={remove}
           swap={swap}
+          replace={replace}
         />
       </VStack>
     </>

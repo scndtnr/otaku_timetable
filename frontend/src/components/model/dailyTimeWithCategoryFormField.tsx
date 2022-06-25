@@ -17,6 +17,7 @@ const DailyTimeWithCategoryFormField = ({
   append,
   remove,
   swap,
+  replace,
 }: DailyTimeFormFieldProps) => {
   const calcNextTimeIndex = (index: number) => {
     const maxIndex = fields.length - 1;
@@ -76,6 +77,9 @@ const DailyTimeWithCategoryFormField = ({
               key={`${item.id}-remove`}
               onClick={() => remove(index)}
               backgroundColor="blue.100"
+              _hover={{
+                bg: "blue.200",
+              }}
             >
               -
             </Button>
@@ -106,6 +110,9 @@ const DailyTimeWithCategoryFormField = ({
             resetField("preInput");
           }}
           backgroundColor="orange.100"
+          _hover={{
+            bg: "orange.200",
+          }}
         >
           +
         </Button>
@@ -116,11 +123,37 @@ const DailyTimeWithCategoryFormField = ({
       <Spacer />
       <Button
         onClick={() => {
+          const sampleData = [
+            { time: "0.0", activity: "睡眠", category: "生活" },
+            { time: "6.0", activity: "朝の支度", category: "生活" },
+            { time: "7.0", activity: "出勤", category: "仕事" },
+            { time: "8.0", activity: "仕事", category: "仕事" },
+            { time: "12.0", activity: "休憩", category: "休憩" },
+            { time: "13.0", activity: "仕事", category: "仕事" },
+            { time: "21.0", activity: "退勤", category: "仕事" },
+            { time: "22.0", activity: "風呂", category: "生活" },
+            { time: "23.0", activity: "夕食", category: "生活" },
+            { time: "23.5", activity: "翌日の準備", category: "生活" },
+          ];
+          replace(sampleData);
+        }}
+        backgroundColor="blue.100"
+        _hover={{
+          bg: "blue.200",
+        }}
+      >
+        サンプルデータ生成
+      </Button>
+      <Button
+        onClick={() => {
           console.log(JSON.stringify(getValues()));
           console.log(JSON.stringify(calcSpan(watch)));
           console.log(JSON.stringify(sumActivitySpan(calcSpan(watch))));
         }}
         backgroundColor="green.100"
+        _hover={{
+          bg: "green.200",
+        }}
       >
         Log
       </Button>

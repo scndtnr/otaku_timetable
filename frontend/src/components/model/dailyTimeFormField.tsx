@@ -15,6 +15,7 @@ const DailyTimeFormField = ({
   append,
   remove,
   swap,
+  replace,
 }: DailyTimeFormFieldProps) => {
   return (
     <Box padding={2}>
