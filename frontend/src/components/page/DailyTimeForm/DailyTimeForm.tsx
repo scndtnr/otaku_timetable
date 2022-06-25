@@ -4,7 +4,7 @@ import { DailyTimeFormType } from "../../model/types";
 import { ChartjsDoughnut } from "./parts/chartjsDoughnut";
 import DailyTimeWithCategoryFormField from "@/components/model/dailyTimeWithCategoryFormField";
 import { useRouter } from "next/router";
-import { decodeScheduleFromQuery } from "@/components/model/shareButton";
+import { decodeSchedule } from "@/components/model/shareButton";
 import { useDidUpdateEffect } from "@/lib/use_did_update_effect";
 
 export const DailyTimeForm = () => {
@@ -34,7 +34,7 @@ export const DailyTimeForm = () => {
 
   useDidUpdateEffect(() => {
     if (typeof query.schedule === "string") {
-      replace(decodeScheduleFromQuery(`${query.schedule}`));
+      replace(decodeSchedule(`${query.schedule}`));
     }
   }, [isReady]);
 
